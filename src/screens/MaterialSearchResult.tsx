@@ -3,37 +3,47 @@ import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, TextInput, Scro
 import { CameraView, LoadingScreen, TopBar } from ".";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { generateClient } from "aws-amplify/api";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 const client = generateClient()
 
-const apiEndpoint = 'https://f2xjalyryd.execute-api.ap-northeast-2.amazonaws.com/staging';
+const apiEndpoint = 'https://quyo5eknfh.execute-api.ap-northeast-2.amazonaws.com/dev';
 
 
 export default function MaterialSearchResult({route, navigation}) {
     const {searchText, searchMaterialText} = route.params;
     console.log("searchText, searchmaterial:", searchText, searchMaterialText)
     console.log("type searchText, type searchMaterial:", typeof(searchText), typeof(searchMaterialText))
+    
     const apiUrl = `${apiEndpoint}/clothSearch?filter=${encodeURIComponent(searchText)}&material=${encodeURIComponent(searchMaterialText)}`;
     const [title, setTitle] = useState('');
     const [materials, setMaterials] = useState('');
+    const [washingmethod, setWashingMethod] = useState([]);
     const [summary, setSummarys] = useState('');
-    
-    console.log("apiurl2:", apiUrl)
+
     async function fetchInformation() {
         try {
+            const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
             console.log("fetching information...")
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            });
             const data = await response.json();
             console.log("Data:", data)
             const title = data.title;
             const materials = data.materials;
+            const washingMethods = data.methods.map(method => method.washingMethod);
             const summary = data.summary;
             console.log("information loading....")
             console.log("title:", title);
             console.log("materials:", materials);
+            console.log("washingmethod:", washingMethods);
             console.log("summary:", summary);
             setTitle(title);
             setMaterials(materials);
+            setWashingMethod(washingMethods);
             setSummarys(summary);
         } catch (error) {
             console.error('Error fetching search result:', error);
@@ -70,6 +80,9 @@ export default function MaterialSearchResult({route, navigation}) {
                     <>
                     <Text style={styles.text}>{title}(을)를 세탁하는 일반적인 방법은 다음과 같습니다.</Text>
                     <Text style={styles.text}>{materials}</Text>
+                    {washingmethod.map((method, index) => (
+                        <Text key={index} style={styles.text}>•{method}</Text>
+                    ))}
                     <Text style={styles.text}>{summary}</Text>
                 </>
                 )}
@@ -144,7 +157,7 @@ const styles = StyleSheet.create({
     mainbox: { 
         padding: 20,
         width: 345, 
-        height: 500, 
+        height: '80%', 
         backgroundColor:'#ffffff', 
         margin: 20, 
         shadowColor: "#000",

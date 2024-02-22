@@ -5,11 +5,10 @@ import { TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-export default function MaterialSearchTab({route}) {
-    const searchText = route.params;
+export default function MaterialSearchTab({route, navigation}) {
+    const {searchText} = route.params;
     console.log("searchText:", searchText)
     const [searchMaterialText, onChangeText] = React.useState('');
-    const navigation = useNavigation();
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.searchbar}>

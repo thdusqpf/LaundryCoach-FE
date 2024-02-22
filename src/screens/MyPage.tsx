@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     profileName:{
         fontFamily: 'NanumSquareNeo-cBd', 
-        fontSize:20,
+        fontSize:18,
         marginLeft:10,
     },
     button: {

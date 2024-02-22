@@ -14,7 +14,6 @@ import {
     withAuthenticator,
     useAuthenticator
 } from '@aws-amplify/ui-react-native';
-import Navigation from '../navigations';
 
 const userSelector = (context) => [context.user];
 const client = generateClient();
@@ -246,7 +245,7 @@ const itemCreate = () =>{
               if (match) {
                 return (
                   <View style={styles.symbol}>
-                    <Image source={{uri:match.symbol}} style={{ width: 30, height: 29 }}/>
+                    <Image key={match.id} source={{uri:match.symbol}} style={{ width: 25, height: 25 }}/>
                   </View>
                 );
                }

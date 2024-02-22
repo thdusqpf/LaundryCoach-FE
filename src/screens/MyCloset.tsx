@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {StatusBar, StyleSheet, Text, View, Pressable, Image, Modal, FlatList} from "react-native";
-import { ClothWrite, ClothWriteNavigation} from '.';
+import { ClothWrite, ClothWriteNavigation, LoadingScreen} from '.';
 import { generateClient } from "aws-amplify/api";
 import { listMyClosets, getMyCloset, listWashingMethods, getWashingMethod } from "../graphql/queries";
 import { createMyCloset, updateMyCloset , deleteMyCloset } from "../graphql/mutations";
@@ -23,10 +23,10 @@ export default function MyCloset({navigation}){
     const [iron, setIron] = useState([]);
     const [dryclean, setDryclean] = useState([]);
     const [wiring, setWiring] = useState([]);
+    
     useEffect(() => {
         query();
     }, []);
-    
 
     async function query() {
         try {
@@ -34,8 +34,9 @@ export default function MyCloset({navigation}){
                 query: listWashingMethods
             });
             const symbolsResult = allWashingMethods.data.listWashingMethods.items;
-
-            setWash(symbolsResult.filter(item => item.category === "세탁"));
+            const wash = symbolsResult.filter(item => item.category === "세탁");
+            console.log("wash", wash)
+            setWash(wash);
             setBleach(symbolsResult.filter(item => item.category === "표백"));
             setDry(symbolsResult.filter(item => item.category === "건조"));
             setIron(symbolsResult.filter(item => item.category === "다림질"));
@@ -45,11 +46,14 @@ export default function MyCloset({navigation}){
             console.error("Error querying WashingMethods:", error);
         }
     }
+    useEffect(() => {
+        fetchMyCloset();
+    }, []);
+    
     async function fetchMyCloset() {
         try {
             const allMyClosets = await client.graphql({
-                query: listMyClosets,
-                variables: { user_id: user.username } // 변수로 사용자 ID 전달
+                query: listMyClosets
             });
             const result = allMyClosets.data.listMyClosets.items;
             const filteredItems = result.filter(item => item.user_id === user.username);
@@ -59,7 +63,7 @@ export default function MyCloset({navigation}){
             console.error("Error querying MyClosets:", error);
         }
     }
-    const [newItem, setNewItem] = useState({ index: results.length, imagePath: null, title: "", symbols:[], note: "" });
+    const [newItem, setNewItem] = useState({ index: results.length, imagePath: "", title: "", symbols:[], note: "" });
 
     
 
@@ -78,7 +82,7 @@ export default function MyCloset({navigation}){
     const hideModal = () => {
         setCreateModalVisible(!createModalVisible);
         // Reset newItem state after hiding modal
-        setNewItem({ id:"", imagePath: "", title: "", symbols: [], notes:"" });
+        setNewItem({ index:0, imagePath: "", title: "", symbols: [], notes:"" });
     };
 
     const saveItem = async () => {
@@ -246,7 +250,6 @@ export default function MyCloset({navigation}){
                     style={styles.cloth}
                     onPress={() => selectItem(result)}
                 >
-                    <Image source={result.imagePath || require('../../assets/images/gallery.png')} />
                     <View>
                         <Text style={styles.name}>{result.title}</Text>
                         <View style={styles.symbols}>
@@ -276,10 +279,8 @@ export default function MyCloset({navigation}){
                                 );
                                 } else {
                                 return (
-                                    <View key={index}>
-                                    <Text>{symbol}</Text>
-                                    <Text>No matching image</Text>
-                                    </View>
+                                    <>
+                                    </>
                                 );
                                 }
                             })}
@@ -326,7 +327,7 @@ const styles = StyleSheet.create({
     header:{
         flexDirection:"row",
         margin: 26,
-        justifyContent: 'space-between', // 요소들을 가로로 정렬
+        justifyContent: 'space-between'
     },
     title:{
         fontSize: 20,
@@ -340,7 +341,7 @@ const styles = StyleSheet.create({
         margin:10,
     },
     symbols:{
-        marginLeft:10
+        marginLeft:20
     },
     createBtn:{
         backgroundColor: "#1472FF",
@@ -352,7 +353,7 @@ const styles = StyleSheet.create({
     },
     btnText:{
         color: "#fff",
-        fontSize: 20,
+        fontSize: 18,
         fontFamily:'BMHANNA_11yrs_ttf',
         textAlign:"center",
     },
@@ -365,8 +366,6 @@ const styles = StyleSheet.create({
         
     },
     cloth: {
-        elevation: 10,
-        margin: 10,
         flexDirection : "row",
         
         

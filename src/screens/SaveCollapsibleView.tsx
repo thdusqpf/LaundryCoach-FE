@@ -29,14 +29,14 @@ const SaveCollapsibleView = ({ save, onDelete}) => {
                         </View>
                         <Text style={styles.content}>{save.materials}</Text>
                         <View style={styles.TitleBox}>
-                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10}} />
+                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10, marginTop: 30}} />
                             <Text style={[styles.contentTitle, {marginTop:30}]}>세탁 방법</Text>
                         </View>
                         {save.laundry_method.map((method, index) => (
                             <Text key={index} style={styles.content}>• {method}</Text>
                         ))}
                         <View style={styles.TitleBox}>
-                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10}} />
+                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10 , marginTop: 30}} />
                             <Text style={[styles.contentTitle, {marginTop:30}]}>GPT 요약</Text>
                         </View>
                         <Text style={styles.content}>{save.summary}</Text>
@@ -97,15 +97,14 @@ const styles = StyleSheet.create({
     TitleBox:{
         flexDirection:"row",
         alignItems:"center",
-        paddingLeft:10,
+        paddingLeft:10
     },
     TitleCheck:{
         
     },
     contentTitle:{
         fontFamily:'NanumSquareNeo-cBd',
-        fontSize:16,
-        marginLeft: 10
+        fontSize:16
     },
     content: {
         fontFamily: 'NanumSquareNeo-cBd',

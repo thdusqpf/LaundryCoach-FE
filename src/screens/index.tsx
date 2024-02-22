@@ -33,9 +33,12 @@ import TopBarNoProfile from "./TopBarNoProfile";
 import MaterialSearchResult from "./MaterialSearchResult";
 import MaterialSearchTab from "./MaterialSearchTab";
 import CameraViewNonavigation from "./CameraViewNonavigation";
+import TopBarNoText from "./TopBarNoText";
+
 export {CameraView, Home, LaundrySymbols, LaundryTips, 
     MyCloset, SaveResult, TouchableTipTab, AnalysisResult, 
     TopBar, MyPage, Cloth, ClothUpdate, ClothUpdateNavigation, ClothWrite, ClothWriteNavigation, TestCloset,
     Bleach, Wash, Dry, Iron, Dryclean, CollapsibleView, CollapsibleViewCheck,
     SaveCollapsibleView, AnalysisCollapsibleView, UploadModeModal, SearchResult, SearchTab, SplashScreen,
-    LoadingScreen, WashingMachine, TopBarNoProfile, MaterialSearchResult, MaterialSearchTab, CameraViewNonavigation};
+    LoadingScreen, WashingMachine, TopBarNoProfile, MaterialSearchResult, MaterialSearchTab, CameraViewNonavigation,
+    TopBarNoText};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, Pressable, ImageBackground, Modal, ScrollView, ActivityIndicator } from 'react-native';
-import { CollapsibleViewCheck} from '.';
+import { CollapsibleViewCheck, LoadingScreen} from '.';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { generateClient } from "aws-amplify/api";
 import { listMyClosets, getMyCloset, listWashingMethods, getWashingMethod } from "../graphql/queries";
@@ -128,9 +128,9 @@ const handleItemUpdate = () => {
                   );
                 } else {
                   return (
-                    <View key={index}>
-                      <Text>{symbol}</Text>
-                    </View>
+                    <>
+                      <LoadingScreen />
+                    </>
                   );
                 }
               })}
@@ -187,9 +187,9 @@ const handleItemUpdate = () => {
                   );
                 } else {
                   return (
-                    <View key={index}>
-                      <Text>No matching</Text>
-                    </View>
+                    <>
+                      <LoadingScreen />
+                    </>
                   );
                 }
               })}

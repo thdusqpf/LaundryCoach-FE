@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, ScrollView, TextInput, TouchableOpacity, ImageBackground, StyleSheet, FlatList } from "react-native";
+import { SafeAreaView, View, Text,  TouchableOpacity, ImageBackground, StyleSheet, FlatList } from "react-native";
 import Icon  from "react-native-vector-icons/MaterialCommunityIcons";
 import { LoadingScreen } from ".";
 import { listLaundryTips } from "../graphql/queries";
@@ -61,11 +61,12 @@ export default function LaundryTips() {
     
     const styles = StyleSheet.create({
         button: {
-            width: 165,
+            width: 159,
             height: 180,
             borderRadius: 12,
             borderColor:'black',
-            margin: 10
+            marginLeft:22,
+            marginTop: 10
             
         },
         mainview: {

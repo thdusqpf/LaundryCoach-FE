@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Modal,Pressable, Image} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, Pressable, Image} from 'react-native';
 import "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Wash, Bleach, Dry, Iron, Dryclean, ClothUpdate, ClothUpdateNavigation} from '.';
+import { Wash, Bleach, Dry, Iron, Dryclean, ClothUpdate, ClothUpdateNavigation, LoadingScreen, TopBar} from '.';
 import { useFocusEffect } from '@react-navigation/native';
 import { generateClient } from "aws-amplify/api";
 import { listMyClosets, getMyCloset, listWashingMethods, getWashingMethod } from "../graphql/queries";
-import { createMyCloset, updateMyCloset , deleteMyCloset } from "../graphql/mutations";
 import {
     withAuthenticator,
     useAuthenticator
@@ -71,18 +70,18 @@ const Cloth = ({route, navigation}) => {
     onClothDelete(item);
     navigation.navigate('MyCloset');
   }
-
+  console.log("item.imagepath", item.imagepath)
   return (
-    <View style={styles.background}>
+    <SafeAreaView style={styles.background}>
+      <TopBar />
       <View style={styles.header}>
-          <Image source={{uri:item.imagePath} || require('../../assets/images/gallery.png')} style={{width:50, height:50}}/>
           <View style={styles.itemDetails}>
             <Text style={styles.headerText}>{item.title}</Text>
-            <Pressable style={styles.icons} onPress={() => navigation.navigate("ClothUpdateNavigation", {item, handleUpdate, handleCancle, saveSymbols})}>
-              <Icon name={'pencil-outline'} size={30} color="#333" />
+            <Pressable style={{marginRight: 10}} onPress={() => navigation.navigate("ClothUpdateNavigation", {item, handleUpdate, handleCancle, saveSymbols})}>
+              <Icon name={'pencil-outline'} size={35} color="#333" />
           </Pressable>
-            <Pressable style={styles.icons} onPress={() => handleDelete(item)}>
-              <Icon name={'trash-can-outline'} size={30} color="#333" />
+            <Pressable  onPress={() => handleDelete(item)}>
+              <Icon name={'trash-can-outline'} size={35} color="#333" style={{marginRight: 20}} />
             </Pressable>
           </View>
           
@@ -115,10 +114,8 @@ const Cloth = ({route, navigation}) => {
               );
             } else {
               return (
-                <View key={index}>
-                  <Text>{symbol}</Text>
-                  <Text>No matching image</Text>
-                </View>
+                <>
+                </>
               );
             }
           })}
@@ -144,15 +141,15 @@ const Cloth = ({route, navigation}) => {
           }
           if (match) {
             return (
-              <View key={index} style={styles.contentText}>
-                <Text>• {symbol}</Text>
+              <View key={index} style={styles.contentview}>
+                <Text style={styles.contentText}>• {symbol}</Text>
               </View>
             );
           } else {
             return (
-              <View key={index}>
-                <Text>No matching</Text>
-              </View>
+              <>
+              <LoadingScreen />
+              </>
             );
           }
         })}
@@ -184,7 +181,7 @@ const Cloth = ({route, navigation}) => {
       </Modal> */}
 
       </View>      
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -192,7 +189,7 @@ const Cloth = ({route, navigation}) => {
 const styles = StyleSheet.create({
   background:{
     backgroundColor:"#fff",
-    height:"100%"
+    flex: 1
   },
   header:{
     marginTop:20,
@@ -202,9 +199,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   headerText:{
-    marginRight:150,
+    marginRight:200,
     fontFamily: 'NanumSquareNeo-cBd',
-    fontSize: 15,
+    fontSize: 18,
+    color: 'black'
   },
   itemDetails:{
     flexDirection:"row",
@@ -212,7 +210,7 @@ const styles = StyleSheet.create({
     marginRight:10
   },
   icons:{
-    marginLeft:10
+    marginLeft: 10
   },
   contents:{
     width:350,
@@ -235,15 +233,21 @@ const styles = StyleSheet.create({
     marginTop:10
   },
   contextTitle:{
-    fontFamily: 'NanumSquareNeo-cBd',
+    fontFamily: 'NanumSquareNeo-dEb',
     fontSize: 15,
     marginTop: 15,
     marginBottom:20,
+    color: 'black'
     
   },
-  contentText:{
-    marginLeft:10,
-    
+  contentview:{
+    marginLeft:10
+  },
+  contentText: {
+    fontFamily: 'NanumSquareNeo-cBd',
+    fontSize: 14,
+    color: 'black'
+
   },
   noteText:{
     marginTop:15

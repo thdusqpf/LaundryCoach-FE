@@ -108,10 +108,11 @@ const styles = StyleSheet.create({
         borderColor:'#DBDBDB'
     },
     TitleText:{
-        marginTop:25,
+        marginTop:20,
         fontFamily:'BMHANNA_11yrs_ttf',
         fontSize: 22,
         textAlign:'center',
+        color: 'black'
     },
     WashButton:{
         backgroundColor:"#92D3F5",

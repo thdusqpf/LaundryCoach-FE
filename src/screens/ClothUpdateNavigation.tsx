@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, Pressable, ImageBackground, Modal, ScrollView, ActivityIndicator } from 'react-native';
-import { CollapsibleViewCheck, UploadModeModal} from '.';
+import { CollapsibleViewCheck, LoadingScreen, TopBarNoText, UploadModeModal} from '.';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { generateClient } from "aws-amplify/api";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -140,18 +140,9 @@ const handleItemUpdate = () => {
       };
   return (
     <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+        <TopBarNoText />
         <View style={styles.background}>
-        <View style={styles.container}>
-            {photoUri && (
-                <Image source={{ uri: photoUri }} style={styles.previewImage} />
-            )}
-        </View>
             <View style={styles.header}>
-                <Pressable onPress={modalOpen}>
-                    <ImageBackground style={styles.headerImage} source={selectedImage || require('../../assets/images/gallery.png')}>                
-                        <Text style={styles.headerImageText}>Select Image</Text>
-                    </ImageBackground>              
-                </Pressable>
                 <UploadModeModal
                     visible={ImgModalVisible} 
                     onClose={() => setImgModalVisible(false)}
@@ -227,9 +218,8 @@ const handleItemUpdate = () => {
                     );
                     } else {
                     return (
-                        <View key={index}>
-                        <Text>{symbol}</Text>
-                        </View>
+                        <>
+                        </>
                     );
                     }
                 })}
@@ -254,23 +244,16 @@ const handleItemUpdate = () => {
                 if (match) {
                   return (
                     <View key={index} style={styles.contentText}>
-                      <Text>• {symbol}</Text>
+                      <Text style={styles.contentText}>• {symbol}</Text>
                     </View>
                   );
                 } else {
                   return (
-                    <View key={index}>
-                      <Text>No matching</Text>
-                    </View>
+                    <>
+                    </>
                   );
                 }
               })}
-
-              <Pressable
-                onPress={()=>setCheckModalVisible(!isCheckModalVisible)}
-              >
-                <Icon name={'plus-circle-outline'} size={20} color="#333" />
-              </Pressable>
               </View>
 
         
@@ -291,11 +274,6 @@ const handleItemUpdate = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
     background: {
       margin: 10,
       width: 364,
@@ -452,8 +430,10 @@ const styles = StyleSheet.create({
       fontSize: 14,
       color: 'black'
     },
-    noteText: {
-     
+    contentText: {
+      fontFamily: 'NanumSquareNeo-cBd',
+      fontSize: 14,
+      color: 'black'
     }
   });
 

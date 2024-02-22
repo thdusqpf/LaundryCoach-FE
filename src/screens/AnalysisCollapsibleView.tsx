@@ -25,20 +25,20 @@ const AnalysisCollapsibleView = ({ save, onDelete}) => {
                     <View style={styles.contentContainer}>
                         <Image source={{uri:save.imagePath}} style={{width: 100, height: 100, marginRight: 10}} />
                         <View style={styles.TitleBox}>
-                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10}} />
+                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10, marginTop: 30}} />
                             <Text style={[styles.contentTitle, {marginTop:30}]}>세탁 방법</Text>
                         </View>
                         {save.symbol && save.symbol.map((symbol, index) => (
                             <Text key={index} style={styles.content}>• {symbol}</Text>
                         ))}
                         <View style={styles.TitleBox}>
-                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10}} />
+                            <Image source={require("../../assets/images/Check.png")} style={{width: 15, height: 15, marginRight: 10 , marginTop: 30}} />
                             <Text style={[styles.contentTitle, {marginTop:30}]}>메모</Text>
                         </View>
                         <Text style={styles.content}>{save.memo}</Text>
                     </View>
                     <Pressable style={styles.icons} onPress={() => onDelete(save)}>
-                        <Icon name={'restore-from-trash'} size={40} color="#333" />
+                        <Icon name='trash-can-outline' size={40} color="#333" />
                     </Pressable>
                 </View>
             )}

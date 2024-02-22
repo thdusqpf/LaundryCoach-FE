@@ -8,11 +8,12 @@ import {
     withAuthenticator,
     useAuthenticator
 } from '@aws-amplify/ui-react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const userSelector = (context) => [context.user];
 const client = generateClient()
 
-
-export default function SaveResult(){
+export default function SaveResult() {
     const [searchResults, setSearchResults] = useState([]);
     const [analysisResults, setAnalysisResults] = useState([]);
     const { user, signOut } = useAuthenticator(userSelector);
@@ -107,7 +108,11 @@ export default function SaveResult(){
     <View style={styles.Container}>
         <StatusBar style="auto"/>
             <ScrollView >
-                <Text style={styles.title}>검색 결과 저장</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                        <Icon name="magnify" size={35} color={'black'} style={{marginTop: 20}} />
+                        <Text style={styles.title}>검색 결과 저장</Text>
+                    </View>
+                {}
                 <View>
                 {searchResults.map((item, index) => {
                     return (
@@ -150,11 +155,10 @@ const styles = StyleSheet.create({
     },
     title:{
         marginTop:20,
-        fontSize: 20,
+        fontSize: 22,
         fontFamily:'BMHANNA_11yrs_ttf',
-        color: "#000"
+        color: "black",
+        textAlign: 'center'
+
     },
 })
-
-
-export default SaveResult;

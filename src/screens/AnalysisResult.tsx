@@ -72,7 +72,7 @@ export default function AnalysisResult({navigation}) {
         async function fetchFiles() {
             console.log("fetching images....")
             const getUrlResult = await getUrl({
-                key: "result_image_key.jpg",
+                key: "cb529738-9ae8-4329-a9f7-cfd4c02b23aa.png",
             });
             console.log('signed URL: ', getUrlResult.url);
             console.log('URL expires at: ', getUrlResult.expiresAt);
@@ -255,7 +255,8 @@ const styles = StyleSheet.create({
     },
     methodtitleview: {
         flexDirection: 'row',
-        padding: 10
+        padding: 10,
+        justifyContent: 'center'
     },
     selectButton: {
         borderRadius: 10,
@@ -294,14 +295,15 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'gray',
         paddingHorizontal: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        width: 280
     },
     titleInputMemo:{
         borderWidth: 2,
         borderColor: 'gray',
         paddingHorizontal: 10,
         borderRadius: 10,
-        width: 300
+        width: 280
     },
     contentText: {
         fontFamily: 'NanumSquareNeo-cBd',

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop:15,
         padding: 10,
-        alignSelf: 'center',  // 가운데 정렬
+        alignSelf: 'center',
         borderRadius:10,
         borderWidth:2,
         borderColor:'#DBDBDB',

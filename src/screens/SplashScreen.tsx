@@ -1,13 +1,21 @@
 import React, {useEffect} from 'react';
-import { View, StyleSheet, Animated, Dimensions,SafeAreaView, Text, ActivityIndicator } from 'react-native';
-
+import { View, StyleSheet, Animated, Dimensions,SafeAreaView } from 'react-native';
+import { Home } from '.';
+import MainTab from '../navigations/MainTab';
+import { useNavigation } from '@react-navigation/native';
 const {width, height} = Dimensions.get('window')
+
 
 const SplashScreen = () => {
   const imageScale = new Animated.Value(0.1);
   const imageScale2 = new Animated.Value(0);
-
+  const navigation = useNavigation();
   
+  useEffect(() => {
+    setTimeout(() => {
+        navigation.navigate('Main')
+    }, 2000)
+}, [])
   Animated.timing(imageScale, {
     toValue: 1,
     duration: 1000,
@@ -23,12 +31,10 @@ const SplashScreen = () => {
   return (
     <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
         <View style={styles.lettercontainer}>
-            <ActivityIndicator/>
-            <Text
-                style={[styles.lettertext]}
-            >
-                로딩중..
-            </Text>
+            <Animated.Image
+                source={require('../../assets/images/letterlogo.png')}
+                style={[styles.letterimage, { transform: [{ scale: imageScale2 }]}]}
+                resizeMode='stretch' />
         </View>
         <Animated.Image
             source={require('../../assets/images/wave.png')}
@@ -65,11 +71,6 @@ const styles = StyleSheet.create({
   logoimage: {
     width,
     height: height/2
-  },
-  lettertext: {
-    fontFamily: 'BMHANNA_11yrs_ttf',
-    color:'black',
-    fontSize: 14
   }
 });
 

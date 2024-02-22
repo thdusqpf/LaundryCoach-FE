@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     mainbox: { 
         padding: 20,
         width: 344, 
-        height: 650, 
+        height: '80%', 
         backgroundColor:'#ffffff', 
         margin: 20, 
         shadowColor: "#000",

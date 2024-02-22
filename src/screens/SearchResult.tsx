@@ -6,43 +6,47 @@ import { generateClient } from "aws-amplify/api";
 import { createSearchResult } from "../graphql/mutations";
 import {useAuthenticator} from '@aws-amplify/ui-react-native';
 import { fetchAuthSession } from "aws-amplify/auth";
-const client = generateClient();
 
+
+const client = generateClient();
 const apiEndpoint = 'https://quyo5eknfh.execute-api.ap-northeast-2.amazonaws.com/dev';
 const userSelector = (context) => [context.user];
-async function currentSession() {
-    try {
-      const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  
 export default function SearchResult({route, navigation}) {
     const searchText2 = '울'
     const {user, signOut} = useAuthenticator(userSelector);
     const {searchText} = route.params;
-    const apiUrl = `${apiEndpoint}/clothSearch?filter=${encodeURIComponent(searchText)}&material=${encodeURIComponent(searchText2)}`;
+    const apiUrl = `${apiEndpoint}/clothSearch?filter=${encodeURIComponent(searchText)}`;
     const [title, setTitle] = useState('');
     const [materials, setMaterials] = useState('');
+    const [washingmethod, setWashingMethod] = useState([]);
     const [summary, setSummarys] = useState('');
     const [searchmaterialText, onChangeText] = React.useState('');
     
     async function fetchInformation() {
         try {
+            const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
             console.log("fetching information...")
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            });
+            console.log("response:", response)
             const data = await response.json();
             console.log("Data:", data)
             const title = data.title;
             const materials = data.materials;
+            const washingMethods = data.methods.map(method => method.washingMethod);
             const summary = data.summary;
             console.log("information loading....")
             console.log("title:", title);
             console.log("materials:", materials);
+            console.log("washingmethod:", washingMethods);
             console.log("summary:", summary);
             setTitle(title);
             setMaterials(materials);
+            setWashingMethod(washingMethods);
             setSummarys(summary);
         } catch (error) {
             console.error('Error fetching search result:', error);
@@ -51,7 +55,7 @@ export default function SearchResult({route, navigation}) {
     useEffect(() => {
         fetchInformation();
       }, []);
-    
+      
       async function OnPressButton() {
         await client.graphql({
             query: createSearchResult,
@@ -60,12 +64,16 @@ export default function SearchResult({route, navigation}) {
                     "user_id": user.username,
                     "title": title,
                     "materials":materials,
-                    "laundry_method": [],
+                    "laundry_method": washingmethod,
                     "summary": summary
                 }
             }
         })
     } 
+    const goToSaveResult = () => {
+        OnPressButton();
+        navigation.navigate('SaveResult')
+    }
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
             <ScrollView>
@@ -84,7 +92,7 @@ export default function SearchResult({route, navigation}) {
                     <View style={styles.resultbutton} >
                         <Text style={styles.buttontext}>검색 결과</Text>
                     </View>
-                    <Icon name="tray-arrow-down" size={30} color={'#1472FF'} onPress={OnPressButton}/>
+                    <Icon name="tray-arrow-down" size={30} color={'#1472FF'} onPress={goToSaveResult}/>
                 </View>
                 {!title || title.length === 0? (
                 <>
@@ -92,6 +100,9 @@ export default function SearchResult({route, navigation}) {
                 </>): (
                     <>
                     <Text style={styles.text}>{title}(을)를 세탁하는 일반적인 방법은 다음과 같습니다.</Text>
+                    {washingmethod.map((method, index) => (
+                        <Text key={index} style={styles.text}>•{method}</Text>
+                    ))}
                     <Text style={styles.text}>{materials}</Text>
                     <Text style={styles.text}>{summary}</Text>
                 </>
@@ -186,7 +197,7 @@ const styles = StyleSheet.create({
     mainbox: { 
         padding: 20,
         width: 345, 
-        height: 500, 
+        height: '80%', 
         backgroundColor:'#ffffff', 
         margin: 20, 
         shadowColor: "#000",
