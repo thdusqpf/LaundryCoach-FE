@@ -1,0 +1,41 @@
+type LaundryTips @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  desc: String
+  background_img: AWSURL
+}
+
+type SearchResult @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  user_id: String
+  title: String!
+  materials: String
+  laundry_method: [String]
+  summary: String
+}
+
+type MyCloset @model @auth(rules: [{allow: public}, {allow: private}]) {
+  id: ID!
+  user_id: String!
+  title: String
+  note: String
+  imagePath: AWSURL
+  symbols: [String]
+}
+
+type WashingMethod @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  category: String
+  desc: String
+  method_name: String
+  symbol: AWSURL
+}
+
+type AnalysisResult @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  user_id: String
+  title: String
+  imagePath: AWSURL
+  symbol: [String]
+  memo: String
+}

@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "LaundryCoach",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authLaundryCoach",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

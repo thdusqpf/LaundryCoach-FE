@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/clothSearch": {
+      "name": "/clothSearch",
+      "lambdaFunction": "clothSearchFunc",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

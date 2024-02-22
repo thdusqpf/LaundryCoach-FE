@@ -1,0 +1,33 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-laundrycoach-dev-31200-authRole",
+      "UnauthRoleArn": "arn:aws:iam::629515838455:role/amplify-laundrycoach-dev-31200-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::629515838455:role/amplify-laundrycoach-dev-31200-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-laundrycoach-dev-31200-deployment",
+      "UnauthRoleName": "amplify-laundrycoach-dev-31200-unauthRole",
+      "StackName": "amplify-laundrycoach-dev-31200",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:629515838455:stack/amplify-laundrycoach-dev-31200/2542bc30-d130-11ee-8951-022ab5203bd1",
+      "AmplifyAppId": "d233ych0ej9li2",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-laundrycoach-dev-31200-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "storage": {
+        "laundrycoach85461307": {
+          "bucketName": "laundrycoachbucket75411-staging",
+          "region": "ap-northeast-2"
+        }
+      },
+      "auth": {
+        "LaundryCoach": {}
+      },
+      "function": {
+        "clothSearchFunc": {
+          "deploymentBucketName": "amplify-laundrycoach-dev-31200-deployment",
+          "s3Key": "amplify-builds/clothSearchFunc-3172432b316950466f67-build.zip"
+        }
+      }
+    }
+  }
+}
