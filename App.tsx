@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navigation from "./src/navigations";
 import { generateClient } from 'aws-amplify/api';
 import {
