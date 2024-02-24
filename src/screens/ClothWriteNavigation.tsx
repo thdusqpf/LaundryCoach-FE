@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TextInput, Pressable, Dimensions, ImageBackground, Modal, ScrollView, Platform } from 'react-native';
-import { CollapsibleViewCheck, UploadModeModal} from '.';
+import { CollapsibleViewCheck, TopBarNoText, UploadModeModal} from '.';
 import * as ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -150,24 +150,11 @@ const itemCreate = () =>{
 
       return (
         <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+          <TopBarNoText />
         <View style={styles.background}>
       
           <View style={styles.header}>
-            {!imageUrl || imageUrl.length === 0?  (
-              <>
-              <Pressable onPress={modalOpen}>
-                <ImageBackground source={require('../../assets/images/gallery.png')} style={{width: 70, height: 70}} resizeMode='stretch'>
-                <Text style={styles.headerImageText}>Select Image</Text>
-                </ImageBackground>    
-              </Pressable>            
-              </>
-              ):(
-                <>
-                <Pressable onPress={modalOpen}>
-                  <ImageBackground source={{uri: testurl}} style={{width: 70, height: 70}} resizeMode='stretch' />
-                </Pressable>
-                </> 
-              )}               
+            
             <UploadModeModal
               visible={ImgModalVisible} 
               onClose={() => setImgModalVisible(false)}

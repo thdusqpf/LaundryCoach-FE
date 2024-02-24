@@ -245,11 +245,8 @@ export default function MyCloset({navigation}){
             </Modal>
 
         {results.map((result, index) => (
-            <View style={styles.box} key={index}>
-                <Pressable 
-                    style={styles.cloth}
-                    onPress={() => selectItem(result)}
-                >
+            <View key={index} style={styles.box} >
+                <Pressable style={styles.cloth}onPress={() => selectItem(result)}>
                     <View>
                         <Text style={styles.name}>{result.title}</Text>
                         <View style={styles.symbols}>
@@ -270,7 +267,7 @@ export default function MyCloset({navigation}){
                                 if(!match){
                                     match = wiring.find((wiringItem) => wiringItem.desc === symbol);
                                 }
-                                if (match) {
+                                if (match && match.symbol !== null) {
                                     
                                 return (
                                     <View key={index} style={styles.symbol}>
@@ -285,14 +282,7 @@ export default function MyCloset({navigation}){
                                 }
                             })}
                             </View>
-                        <FlatList
-                            data={result.symbols}
-                            keyExtractor={(symbol, index) => index.toString()}
-                            horizontal
-                            renderItem={({ item: contentImage }) => (
-                            <Image source={contentImage} style={styles.contentImage} />
-                            )}
-                        />
+                        
                     </View>
                 </Pressable>
             </View>

@@ -38,7 +38,7 @@ const AnalysisCollapsibleView = ({ save, onDelete}) => {
                         <Text style={styles.content}>{save.memo}</Text>
                     </View>
                     <Pressable style={styles.icons} onPress={() => onDelete(save)}>
-                        <Icon name='trash-can-outline' size={40} color="#333" />
+                    <Icon name={'restore-from-trash'} size={40} color="#333" />
                     </Pressable>
                 </View>
             )}
